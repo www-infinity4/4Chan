@@ -20,6 +20,15 @@ const postLimiter = rateLimit({
   message: { error: 'Too many posts. Please wait a minute before posting again.' },
 });
 
+// Allow at most 30 verify requests per IP per minute
+const verifyLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please slow down.' },
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -49,7 +58,7 @@ app.post('/api/posts', postLimiter, (req, res) => {
 });
 
 // GET /api/verify — verify chain integrity (admin use)
-app.get('/api/verify', (req, res) => {
+app.get('/api/verify', verifyLimiter, (req, res) => {
   try {
     const result = verifyChain();
     res.json(result);
