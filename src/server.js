@@ -3,12 +3,22 @@
 require('dotenv').config();
 
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const { appendPost, verifyChain, getPosts } = require('./chain');
 const { moderate } = require('./moderate');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Allow at most 10 new posts per IP per minute
+const postLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many posts. Please wait a minute before posting again.' },
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -21,7 +31,7 @@ app.get('/api/posts', (req, res) => {
 });
 
 // POST /api/posts — submit a new post
-app.post('/api/posts', (req, res) => {
+app.post('/api/posts', postLimiter, (req, res) => {
   const message = (req.body.message || '').trim();
 
   const { allowed, reason } = moderate(message);
