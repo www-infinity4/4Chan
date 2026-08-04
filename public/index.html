@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4Chan – Science & Robots Forum</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>4Chan</h1>
+    <p class="tagline">Anonymous discussion – Science, Robots & Technology</p>
+    <p class="notice">No sign-up required. All posts are anonymous. Be respectful.</p>
+  </header>
+
+  <main>
+    <section class="post-form-section">
+      <h2>Post a Message</h2>
+      <form id="post-form">
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Share your thoughts on science, robotics, AI, or technology…"
+          maxlength="2000"
+          required
+        ></textarea>
+        <div class="form-footer">
+          <span id="char-count">0 / 2000</span>
+          <button type="submit">Post</button>
+        </div>
+        <p id="form-error" class="error" hidden></p>
+      </form>
+    </section>
+
+    <section class="posts-section">
+      <h2>Recent Posts</h2>
+      <div id="posts-container">
+        <p class="loading">Loading posts…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Posts are chained and tamper-evident. All content is moderated automatically.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
