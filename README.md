@@ -65,3 +65,4 @@ Content is filtered locally by `src/moderate.js` before a post is accepted. Mess
 - Contain hate-speech slurs or explicit threats
 
 Edit `src/moderate.js` to add or remove patterns.
+<script src="https://www-infinity4.github.io/Mint-For-Infinity/infinity-wallet-menu.js" defer></script>
